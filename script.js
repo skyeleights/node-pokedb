@@ -1,6 +1,7 @@
 const fs = require("fs");
 const http = require("http");
 const url = require("url");
+const funPut = require("./modules/replaceTemp");
 const temp = fs.readFileSync(`${__dirname}/index.html`, "utf-8");
 const card = fs.readFileSync(`${__dirname}/card.html`, "utf-8");
 const data = [
@@ -9,12 +10,7 @@ const data = [
   { id: 2, name: "squirtle", type: "water" },
   { id: 3, name: "bulbasaur", type: "grass" },
 ];
-const funPut = function (el, card) {
-  let output = card.replace(/{%NAME%}/g, el.name);
-  output = output.replace(/{%TYPE%}/g, el.type);
-  output = output.replace(/{%ID%}/g, el.id);
-  return output;
-};
+
 const server = http.createServer((req, res) => {
   const { query, pathname } = url.parse(req.url, true);
   if (pathname === "/") {
